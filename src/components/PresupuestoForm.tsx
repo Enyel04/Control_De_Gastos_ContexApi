@@ -1,6 +1,20 @@
 
+import { useState } from "react"
+import { ChangeEvent } from "react"
+
 
 export default function Form() {
+    const [presupuesto,setPresupuesto]= useState(0)
+
+    const handleChange=(e : ChangeEvent<HTMLInputElement>) => {
+
+      setPresupuesto(e.target.valueAsNumber)
+      
+      
+    }
+
+    
+
   return (
     
     <form className='space-y-5'>
@@ -10,11 +24,13 @@ export default function Form() {
           </label>
 
           <input
-                id='presupuesto' 
+                id='presupuestoID' 
                 type="number" 
                 className=" w-full bg-white border bordger-gray-200 p2"
                 placeholder='Definir tu presupuesto '
                 name='presupuesto'
+                value={presupuesto}
+                onChange={ handleChange}
           />
       </div>
 
