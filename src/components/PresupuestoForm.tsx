@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { ChangeEvent } from "react"
 
 
@@ -12,6 +12,11 @@ export default function Form() {
       
       
     }
+
+    const isValid= useMemo (() => {
+      return isNaN(presupuesto) || presupuesto <=0
+      
+    }, [presupuesto])
 
     
 
@@ -37,8 +42,8 @@ export default function Form() {
       <input 
           type="submit" 
           value='Definir Presupuesto'
-          className=' bg-sky-600 hover:bg-sky-700 cursor-pointer w-full p-2 text-white font-black uppercase'
-      
+          className=' bg-sky-600 hover:bg-sky-700 cursor-pointer w-full p-2 text-white font-black uppercase disabled:opacity-40'
+        disabled={isValid}
       />
 
 
