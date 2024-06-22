@@ -1,7 +1,16 @@
+import { useContext } from "react"
 import PresupuestoForm from "./components/PresupuestoForm"
+import { PresupuestoContext } from "./context/PresupuestoContext"
+
+import { usePresupuesto } from "./hooks/usePresupuesto"
 
 
 function App() {
+
+ const {state,dispatch}= usePresupuesto()
+  console.log(state);
+  
+  
  
   return(
     <>
