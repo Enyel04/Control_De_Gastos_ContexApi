@@ -1,6 +1,6 @@
-import { useContext } from "react"
+
 import PresupuestoForm from "./components/PresupuestoForm"
-import { PresupuestoContext } from "./context/PresupuestoContext"
+
 
 import { usePresupuesto } from "./hooks/usePresupuesto"
 
@@ -21,7 +21,7 @@ function App() {
       </h1>
 
       <div className=" max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
-        <PresupuestoForm/>
+          <PresupuestoForm/>
 
       </div>
 
