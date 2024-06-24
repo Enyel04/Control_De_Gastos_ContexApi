@@ -1,17 +1,18 @@
 
 import PresupuestoForm from "./components/PresupuestoForm"
-
+import { useMemo } from "react";
 
 import { usePresupuesto } from "./hooks/usePresupuesto"
+import PresupuestoTracker from "./components/PresupuestoTracker";
 
 
 function App() {
 
- const {state,dispatch}= usePresupuesto()
-  console.log(state);
+ const {state}= usePresupuesto()
+  console.log(state.presupuesto);
   
-  
- 
+  const isvalidPresupuesto=useMemo(() =>state.presupuesto>0 , [state.presupuesto])
+
   return(
     <>
     
@@ -21,7 +22,7 @@ function App() {
       </h1>
 
       <div className=" max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
-          <PresupuestoForm/>
+         {isvalidPresupuesto ? <PresupuestoTracker/> : <PresupuestoForm/>}
 
       </div>
 
