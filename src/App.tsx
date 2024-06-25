@@ -4,6 +4,7 @@ import { useMemo } from "react";
 
 import { usePresupuesto } from "./hooks/usePresupuesto"
 import PresupuestoTracker from "./components/PresupuestoTracker";
+import GastosModal from "./components/GastosModal";
 
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
          {isvalidPresupuesto ? <PresupuestoTracker/> : <PresupuestoForm/>}
 
       </div>
+      {/* Cuando no se tiene un else en la validacion se coloca && para solamente decir true */}
+
+      <main className=" max-w-3xl mx-auto py-10">
+     {isvalidPresupuesto &&(<GastosModal/>)} 
+     </main>
 
 
     </div>

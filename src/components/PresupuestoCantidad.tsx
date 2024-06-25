@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { formatoDivisa } from '../helpers'
 
 type PresupuestoCantidadProps={
