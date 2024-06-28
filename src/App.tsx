@@ -18,6 +18,7 @@ function App() {
   return(
     <>
     
+    
     <div className=" bg-sky-600 py-6 max-h-72">
       <h1 className=" uppercase text-center font-black text-4xl text-white">
         Control de Gastos
@@ -34,11 +35,11 @@ function App() {
 
 
      {isvalidPresupuesto &&(  
-        <main className=" max-w-3xl mx-auto py-10">
-          <GastosList/> 
-          <GastosModal/>     
-        </main>
-      )} 
+      <main className=" max-w-3xl mx-auto py-10">
+        <GastosList/> 
+        <GastosModal/>     
+      </main>
+    )} 
 
 
 
