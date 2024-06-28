@@ -1,19 +1,36 @@
+import { DraftCantidad,Gastos } from "../types"
+
+import { v4 as uuidv4 } from "uuid"
+
 export type PresupuestoAction=
     {type: 'add-presupuesto',payload:{presupuesto:number}} |
     {type: 'ver-modal'} |
-    {type: 'close-modal'} 
+    {type: 'close-modal'} |
+    {type: 'add-gastos',payload:{gastos:DraftCantidad}} 
 
 
 export type PresupuestoState={
     presupuesto:number
     modal:boolean
+    gastos:Gastos[]
 }
 
 export const initialState : PresupuestoState= {
 
     presupuesto:0,
-    modal:false
+    modal:false,
+    gastos:[]
+ 
 
+}
+
+const crearGastos= (DraftCantidad :DraftCantidad) :Gastos => {
+
+    return {
+        ...DraftCantidad,
+        id:uuidv4()
+    }
+  
 }
 
 export const PresupuestoReducer= (
@@ -40,6 +57,18 @@ export const PresupuestoReducer= (
         return{
             ...state,
             modal:false
+        }
+        
+    }
+    if (action.type==='add-gastos') {
+
+        const gastos= crearGastos(action.payload.gastos)
+
+        return{
+            ...state,
+            gastos:[...state.gastos,gastos],
+            modal:false
+
         }
         
     }

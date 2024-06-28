@@ -1,5 +1,6 @@
 import { categories } from "../data/categories";
 
+
 import type { DraftCantidad, Value } from "../types";
 import { ChangeEvent } from "react";
 
@@ -9,6 +10,8 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-date-picker/dist/DatePicker.css';
 
 import MensajeError from "./MensajeError";
+
+import { usePresupuesto } from "../hooks/usePresupuesto";
 
 
 
@@ -22,6 +25,7 @@ export default function GastosForm() {
     })
 
     const [error,setError]=useState('')
+    const { dispatch} = usePresupuesto()
     
     const handleChange= (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
       const {name, value} = e.target
@@ -53,14 +57,23 @@ export default function GastosForm() {
 
       // Validación
       if (Object.values(gastos).includes('')) {
-       
+        //Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
         setTimeout(() => {
           setError('Todos los Campos son obligatorios');
-        }, 1500); // El mensaje desaparecerá después de 3 segundos
+        }, 1500); 
         return;
     }
 
-      console.log('Todo fino');
+      //Agregar un nuevo gasto
+      dispatch({type:'add-gastos',payload:{gastos}})
+
+      //Reiniciar el state
+      setGastos({
+        cantidad:0,
+        nombreGasto:'',
+        categoria:'',
+        date:new Date()
+      })
       
   };
   
@@ -76,18 +89,18 @@ export default function GastosForm() {
       <div className=" flex flex-col gap-2">
         <label htmlFor="nombreGasto" className=" text-xl"> Nombre Gasto:</label>
 
-        <input type="text" id="nombreGasto" placeholder="Nombre de Gastos" className=" bg-slate-100 p-2" name="nombreGasto"onChange={handleChange}/>
+        <input type="text" id="nombreGasto" placeholder="Nombre de Gastos" className=" bg-slate-100 p-2" name="nombreGasto"onChange={handleChange} value={gastos.nombreGasto}/>
 
       </div>
       <div className=" flex flex-col gap-2">
         <label htmlFor="cantidad" className=" text-xl"> Cantidad:</label>
-        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto" className=" bg-slate-100 p-2" name="cantidad" onChange={handleChange}/>
+        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto" className=" bg-slate-100 p-2" name="cantidad" onChange={handleChange} value={gastos.cantidad}/>
 
       </div>
       <div className=" flex flex-col gap-2">
         <label htmlFor="categoria" className=" text-xl"> categoria:</label>
 
-        <select className="bg-slate-100 p-2" id="categoria" name="categoria" onChange={handleChange}>
+        <select className="bg-slate-100 p-2" id="categoria" name="categoria" onChange={handleChange} value={gastos.categoria}>
 
           {/* Sintaxis para realizar consultas para almacenar en un select */}
               <option value="">--Seleccione--</option>

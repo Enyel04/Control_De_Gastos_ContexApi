@@ -23,6 +23,7 @@ function App() {
       </h1>
 
       <div className=" max-w-3xl mx-auto bg-white shadow-lg rounded-lg mt-10 p-10">
+        {/* Validación de presupuesto, de mostrar el tracker o el form */}
          {isvalidPresupuesto ? <PresupuestoTracker/> : <PresupuestoForm/>}
 
       </div>
