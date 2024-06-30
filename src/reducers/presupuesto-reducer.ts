@@ -70,6 +70,8 @@ export const PresupuestoReducer= (
             modal:false
 
         }
+
+        
         
     }
 

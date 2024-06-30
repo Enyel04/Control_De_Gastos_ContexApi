@@ -6,6 +6,7 @@ import { usePresupuesto } from "./hooks/usePresupuesto"
 import PresupuestoTracker from "./components/PresupuestoTracker";
 import GastosModal from "./components/GastosModal";
 import GastosList from "./components/GastosList";
+import { BanknotesIcon } from "@heroicons/react/24/solid";
 
 
 function App() {
@@ -17,9 +18,10 @@ function App() {
 
   return(
     <>
-    
+  
     
     <div className=" bg-sky-600 py-6 max-h-72">
+      
       <h1 className=" uppercase text-center font-black text-4xl text-white">
         Control de Gastos
       </h1>
@@ -33,9 +35,12 @@ function App() {
 
     
 
-
+    
      {isvalidPresupuesto &&(  
+      
       <main className=" max-w-3xl mx-auto py-10">
+
+        
         <GastosList/> 
         <GastosModal/>     
       </main>
