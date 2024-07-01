@@ -2,7 +2,7 @@ import { categories } from "../data/categories";
 
 
 import type { DraftCantidad, Value } from "../types";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useEffect } from "react";
 
 import { useState } from 'react';
 import DatePicker from 'react-date-picker';
@@ -25,7 +25,15 @@ export default function GastosForm() {
     })
 
     const [error,setError]=useState('')
-    const { dispatch} = usePresupuesto()
+    const { dispatch,state} = usePresupuesto()
+    //Se agrega todo esto para realizar la actualizacion del Formulario, esto rellena todos los datos del Formulario
+    useEffect(() => {
+      if (state.editandoID) {
+      const editandoGasto=state.gastos.filter(actualGastos => actualGastos.id ===state.editandoID ) [0]
+        setGastos(editandoGasto)
+
+      }},[state.editandoID])
+
     
     const handleChange= (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
       const {name, value} = e.target
@@ -55,7 +63,7 @@ export default function GastosForm() {
       e.preventDefault()
    
 
-      // Validación
+      // Validación de si estan los datos en el formulario
       if (Object.values(gastos).includes('')) {
         //Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
         setTimeout(() => {
@@ -64,8 +72,15 @@ export default function GastosForm() {
         return;
     }
 
-      //Agregar un nuevo gasto
-      dispatch({type:'add-gastos',payload:{gastos}})
+    if (state.editandoID) {
+        dispatch({type:'actualizar-gasto',payload:{gastos:{id:state.editandoID, ...gastos}}})
+
+    }else{
+    //Agregar un nuevo gasto
+    dispatch({type:'add-gastos',payload:{gastos}})
+    }
+
+   
 
       //Reiniciar el state
       setGastos({
@@ -81,7 +96,7 @@ export default function GastosForm() {
   return (
     <form className="space-y-5" onSubmit={handleSubmit}>
       <legend 
-      className="uppercase text-center text-2xl font-black border-b-4 border-sky-500 py-2">Nuevo Gasto</legend>
+      className="uppercase text-center text-2xl font-black border-b-4 border-sky-500 py-2">{state.editandoID ? 'Guardar Cambios' : 'Registar Gasto'}</legend>
        
 
       {error && <MensajeError> {error} </MensajeError>}
@@ -124,7 +139,8 @@ export default function GastosForm() {
 
         
 
-        <input type="submit" className=" bg-sky-600 cursor-pointer w-full text-white uppercase font-bold rounded-lg p-2" value={'Registrar Gasto'} />
+        <input type="submit" className=" bg-sky-600 cursor-pointer w-full text-white uppercase font-bold rounded-lg p-2" 
+        value={state.editandoID? 'Guardar Cambios': 'Registrar Gasto'} />
 
 
       

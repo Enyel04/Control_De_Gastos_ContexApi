@@ -12,6 +12,8 @@ import {
     TrailingActions,
   } from 'react-swipeable-list';
   import 'react-swipeable-list/dist/styles.css';
+import { usePresupuesto } from "../hooks/usePresupuesto"
+
 
 
 
@@ -21,7 +23,7 @@ type GastosDetallesProps={
 }
 export default function GastosDetalles({gastos} :GastosDetallesProps) {
 
-
+  const {dispatch} =usePresupuesto()
 
     const categoriaInfo=useMemo(()=> categories.filter(cat=>cat.id===gastos.categoria)[0], 
     [gastos])
@@ -29,8 +31,9 @@ export default function GastosDetalles({gastos} :GastosDetallesProps) {
     const leadingActions= () => (
       <LeadingActions>
         <SwipeAction 
-        //Se necesita un onclick para usar el esto
-        onClick={ () => {} }>
+        //Se necesita un onclick para usar el esto y se agrega para tomar el ID el dispatch
+        onClick={ () => dispatch({type:'get-gastos-by-id',payload:{id:gastos.id}}) }
+        >
             Actualizar
         </SwipeAction>
       </LeadingActions>
@@ -38,8 +41,11 @@ export default function GastosDetalles({gastos} :GastosDetallesProps) {
     const trailingActions= () => (
       <TrailingActions>
         <SwipeAction 
-        //Se necesita un onclick para usar el esto
-            onClick={ () => {} }>
+        //Se necesita un onclick para usar el esto, se toma el dispatch para eliminarlo
+            onClick={ () => dispatch({type:'remove-gasto',payload:{id:gastos.id}}) }
+            //Destructive lo elimina visualmente
+            destructive={true}
+            >
             Eliminar
         </SwipeAction>
       </TrailingActions>
@@ -49,7 +55,7 @@ export default function GastosDetalles({gastos} :GastosDetallesProps) {
         <SwipeableList>
             <SwipeableListItem
             //Pixeles que se recorren para est accion
-            maxSwipe={30} 
+            maxSwipe={1} 
             // Del Lado Izquierdo al lado derecho
             leadingActions={leadingActions()}
               //  Del lado derecho al izquierdo

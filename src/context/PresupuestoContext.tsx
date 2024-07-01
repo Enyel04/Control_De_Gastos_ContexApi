@@ -24,10 +24,6 @@ export const PresupuestoContext=createContext<PresupuestoContextProps>(null! )
 export const PresupuestoProveedor= ({children}: PresupuestoProveedorProps ) => {
 
         const [state,dispatch] =useReducer(PresupuestoReducer,initialState)
-
-       
-
-  
         return(
 
                 <PresupuestoContext.Provider
