@@ -6,7 +6,7 @@ import { usePresupuesto } from "./hooks/usePresupuesto"
 import PresupuestoTracker from "./components/PresupuestoTracker";
 import GastosModal from "./components/GastosModal";
 import GastosList from "./components/GastosList";
-import { BanknotesIcon } from "@heroicons/react/24/solid";
+
 
 
 function App() {
