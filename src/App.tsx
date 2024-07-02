@@ -6,6 +6,7 @@ import { usePresupuesto } from "./hooks/usePresupuesto"
 import PresupuestoTracker from "./components/PresupuestoTracker";
 import GastosModal from "./components/GastosModal";
 import GastosList from "./components/GastosList";
+import FiltradoCategoria from "./components/FiltradoCategoria";
 
 
 
@@ -47,7 +48,7 @@ function App() {
       
       <main className=" max-w-3xl mx-auto py-10">
 
-        
+        <FiltradoCategoria/>
         <GastosList/> 
         <GastosModal/>     
       </main>

@@ -1,5 +1,5 @@
 
-import { DraftCantidad,Gastos } from "../types"
+import { Category, DraftCantidad,Gastos } from "../types"
 
 import { v4 as uuidv4 } from "uuid"
 
@@ -10,7 +10,9 @@ export type PresupuestoAction=
     {type: 'add-gastos',payload:{gastos:DraftCantidad}} |
     {type: 'remove-gasto',payload:{id:Gastos['id']}} |
     {type:'get-gastos-by-id', payload:{id:Gastos['id']}} |
-    {type:'actualizar-gasto', payload:{gastos:Gastos}}
+    {type:'actualizar-gasto', payload:{gastos:Gastos}} |
+    {type:'resetear'} |
+    {type:'add-filtrado-categoria', payload:{id:Category['id']}}
 
 
 export type PresupuestoState={
@@ -18,6 +20,7 @@ export type PresupuestoState={
     modal:boolean
     gastos:Gastos[]
     editandoID:Gastos['id']
+    currentCategory:Category['id']
 }
 
 //Inicia el presupuesto vacio, si no hay nada, retorna en vacio, si hay algo, retorna lo guardado, esto es para el presupuesto
@@ -39,7 +42,8 @@ export const initialState : PresupuestoState= {
     presupuesto:initialPresupuesto(),
     modal:false,
     gastos:localStorageGastos(),
-    editandoID:''
+    editandoID:'',
+    currentCategory:''
  
 
 }
@@ -119,6 +123,27 @@ export const PresupuestoReducer= (
             editandoID:''
         }
     }
+
+    if (action.type==='resetear') {
+
+        //Se toma el state inicial y se reenvia para aca, para colocarlo todo en 0
+
+        return{
+            ...state,
+            presupuesto:0,
+            gastos:[]
+ 
+        }
+        
+    }
+    if (action.type==='add-filtrado-categoria') {
+        return{
+            ...state,
+            currentCategory:action.payload.id
+        }
+    }
+
+    
 
     return state
     }

@@ -3,9 +3,11 @@ import { usePresupuesto } from '../hooks/usePresupuesto'
 import PresupuestoCantidad from './PresupuestoCantidad'
 import 'react-circular-progressbar/dist/styles.css'
 
+
+
 export default function PresupuestoTracker() {
 
-    const {state,totalGastos,disponiblePresupuesto}= usePresupuesto()
+    const {state,totalGastos,disponiblePresupuesto,dispatch}= usePresupuesto()
                     //El signo de + lo combierte a numero
     const porcentaje= +((totalGastos/state.presupuesto) * 100).toFixed(2) //Tofixed es para que no muestre mas de 2 decimales
 
@@ -30,9 +32,10 @@ export default function PresupuestoTracker() {
         </div>
 
         <div className='flex flex-col  justify-center items-center  gap-8'>
-            <button type='button' className='  bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg hover:bg-pink-700'>
-
-            Restetear APP
+            <button type='button' className='  bg-pink-600 w-full p-2 text-white uppercase font-bold rounded-lg hover:bg-pink-700' 
+            onClick={() =>  dispatch({type:'resetear'})}
+                >
+            Resetear APP
             </button>
 
             <PresupuestoCantidad
