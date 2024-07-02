@@ -11,7 +11,7 @@ export default function PresupuestoTracker() {
                     //El signo de + lo combierte a numero
     const porcentaje= +((totalGastos/state.presupuesto) * 100).toFixed(2) //Tofixed es para que no muestre mas de 2 decimales
 
-    console.log(porcentaje);
+  
     
   return (
     <div className='grid grid-cols-1  md:grid-cols-2 gap-5'>

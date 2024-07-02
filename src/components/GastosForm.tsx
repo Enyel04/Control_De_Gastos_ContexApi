@@ -119,9 +119,11 @@ export default function GastosForm() {
       </div>
       <div className=" flex flex-col gap-2">
         <label htmlFor="cantidad" className=" text-xl"> Cantidad:</label>
-        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto Ejem:200" className=" bg-slate-100 p-2" name="cantidad" onChange={handleChange} />
-
+        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto Ejem:200" className=" bg-slate-100 p-2" value={gastos.cantidad === 0 ? '' : gastos.cantidad} name="cantidad" onChange={handleChange} />
+        <p className=" p-0  font-bold  text-base"> Disponible: ${disponiblePresupuesto}</p>
       </div>
+
+
       <div className=" flex flex-col gap-2">
         <label htmlFor="categoria" className=" text-xl"> categoria:</label>
 
