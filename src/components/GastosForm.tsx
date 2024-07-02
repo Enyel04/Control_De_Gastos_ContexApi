@@ -66,13 +66,16 @@ export default function GastosForm() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
    
+ // Crear una copia de gastos sin la propiedad nombreGasto
+    const { nombreGasto, ...restoGastos } = gastos;
 
-      // Validación de si estan los datos en el formulario
-      if (Object.values(gastos).includes('')) {
-        //Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
-          setError('Todos los Campos son obligatorios')
-        return;
+    // Validación de si están los datos en el formulario
+    if (Object.values(restoGastos).includes('')) {
+      // Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
+      setError('Todos los Campos son obligatorios');
+      return;
     }
+
 
     //Validacion que no pase del limite
       if ((gastos.cantidad-presupuestoPrevio)>disponiblePresupuesto) {
@@ -112,31 +115,33 @@ export default function GastosForm() {
       {error && <MensajeError> {error} </MensajeError>}
     
       <div className=" flex flex-col gap-2">
-        <label htmlFor="nombreGasto" className=" text-xl"> Nombre Gasto:</label>
-
-        <input type="text" id="nombreGasto" placeholder="Nombre de Gastos" className=" bg-slate-100 p-2" name="nombreGasto"onChange={handleChange} value={gastos.nombreGasto}/>
-
-      </div>
-      <div className=" flex flex-col gap-2">
-        <label htmlFor="cantidad" className=" text-xl"> Cantidad:</label>
-        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto Ejem:200" className=" bg-slate-100 p-2" value={gastos.cantidad === 0 ? '' : gastos.cantidad} name="cantidad" onChange={handleChange} />
-        <p className=" p-0  font-bold  text-base"> Disponible: ${disponiblePresupuesto}</p>
-      </div>
-
-
-      <div className=" flex flex-col gap-2">
-        <label htmlFor="categoria" className=" text-xl"> categoria:</label>
+        <label htmlFor="categoria" className=" text-xl"> Categoría:</label>
 
         <select className="bg-slate-100 p-2" id="categoria" name="categoria" onChange={handleChange} value={gastos.categoria}>
 
           {/* Sintaxis para realizar consultas para almacenar en un select */}
-              <option value="">--Seleccione--</option>
+              <option value="" disabled>--Seleccione--</option>
                 {categories.map((categoria) => (
                   <option value={categoria.id} key={categoria.id}>
                     {categoria.name}
                   </option>
                 ))}
         </select>
+     
+
+      </div>
+      <div className=" flex flex-col gap-2">
+        <label htmlFor="cantidad" className=" text-xl"> Cantidad Disponible: <span className=" font-bold"> ${disponiblePresupuesto} </span></label>
+        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto Ejem:200" className=" bg-slate-100 p-2" value={gastos.cantidad === 0 ? '' : gastos.cantidad} name="cantidad" onChange={handleChange} />
+      
+      </div>
+
+
+      <div className=" flex flex-col gap-2">
+           <label htmlFor="nombreGasto" className=" text-xl"> Nombre Gasto:</label>
+
+        <input type="text" id="nombreGasto" placeholder="Nombre de Gastos" className=" bg-slate-100 p-2" name="nombreGasto"onChange={handleChange} value={gastos.nombreGasto}/>
+      
 
         <div className=" flex flex-col gap-2">
         <label htmlFor="fechaGasto" className=" text-xl">Fecha Gasto:</label>
