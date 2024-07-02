@@ -16,6 +16,8 @@ import { usePresupuesto } from "../hooks/usePresupuesto";
 
 
 export default function GastosForm() {
+
+
     //Estoy trayendo los datos de Types del index
     const [gastos,setGastos]=useState<DraftCantidad>({
       cantidad:0,
@@ -25,12 +27,14 @@ export default function GastosForm() {
     })
 
     const [error,setError]=useState('')
-    const { dispatch,state} = usePresupuesto()
+    const [presupuestoPrevio,setPresupuestoPrevio]=useState(0)
+    const { dispatch,state,disponiblePresupuesto} = usePresupuesto()
     //Se agrega todo esto para realizar la actualizacion del Formulario, esto rellena todos los datos del Formulario
     useEffect(() => {
       if (state.editandoID) {
       const editandoGasto=state.gastos.filter(actualGastos => actualGastos.id ===state.editandoID ) [0]
         setGastos(editandoGasto)
+        setPresupuestoPrevio(editandoGasto.cantidad)
 
       }},[state.editandoID])
 
@@ -66,9 +70,14 @@ export default function GastosForm() {
       // Validación de si estan los datos en el formulario
       if (Object.values(gastos).includes('')) {
         //Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
-        setTimeout(() => {
-          setError('Todos los Campos son obligatorios');
-        }, 1500); 
+          setError('Todos los Campos son obligatorios')
+        return;
+    }
+
+    //Validacion que no pase del limite
+      if ((gastos.cantidad-presupuestoPrevio)>disponiblePresupuesto) {
+        //Se agrega setTimeOut para que aparezca y desaparezca mensaje de error
+          setError('Presupuesto Insuficiente')
         return;
     }
 
@@ -89,6 +98,7 @@ export default function GastosForm() {
         categoria:'',
         date:new Date()
       })
+      setPresupuestoPrevio(0)
       
   };
   

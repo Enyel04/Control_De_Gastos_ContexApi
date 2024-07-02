@@ -1,4 +1,4 @@
-import { useReducer, createContext, Dispatch, ReactNode } from "react"
+import { useReducer, createContext, Dispatch, ReactNode, useMemo } from "react"
 
 import { PresupuestoReducer,PresupuestoState ,initialState,PresupuestoAction } from "../reducers/presupuesto-reducer"
 
@@ -8,6 +8,9 @@ type PresupuestoContextProps={
 
         state: PresupuestoState
         dispatch:Dispatch<PresupuestoAction>
+        totalGastos:number
+        disponiblePresupuesto:number
+
     
 }
 //Creando el Props de Children
@@ -24,12 +27,22 @@ export const PresupuestoContext=createContext<PresupuestoContextProps>(null! )
 export const PresupuestoProveedor= ({children}: PresupuestoProveedorProps ) => {
 
         const [state,dispatch] =useReducer(PresupuestoReducer,initialState)
+
+        const totalGastos=useMemo(() => 
+        state.gastos.reduce((total,gastos)=>
+                gastos.cantidad  +total, 0), [state.gastos] )
+
+        const disponiblePresupuesto= state.presupuesto - totalGastos
+
+
         return(
 
                 <PresupuestoContext.Provider
                         value={{
                                state,
-                               dispatch
+                               dispatch,
+                               totalGastos,
+                               disponiblePresupuesto
                         
                         }}
                 >

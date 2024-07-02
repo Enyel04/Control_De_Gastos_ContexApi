@@ -1,17 +1,13 @@
 
-import { useMemo } from 'react'
+
 import { usePresupuesto } from '../hooks/usePresupuesto'
 import PresupuestoCantidad from './PresupuestoCantidad'
 
 export default function PresupuestoTracker() {
 
-    const {state}= usePresupuesto()
+    const {state,totalGastos,disponiblePresupuesto}= usePresupuesto()
 
-    const totalGastos=useMemo(() => 
-        state.gastos.reduce((total,gastos)=>
-            gastos.cantidad  +total, 0), [state.gastos] )
-
-    const disponiblePresupuesto= state.presupuesto - totalGastos
+    
   return (
     <div className='grid grid-cols-1  md:grid-cols-2 gap-5'>
 
