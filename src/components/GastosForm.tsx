@@ -119,7 +119,7 @@ export default function GastosForm() {
       </div>
       <div className=" flex flex-col gap-2">
         <label htmlFor="cantidad" className=" text-xl"> Cantidad:</label>
-        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto" className=" bg-slate-100 p-2" name="cantidad" onChange={handleChange} value={gastos.cantidad}/>
+        <input type="number" id="cantidad" placeholder="Añade la Cantidad del Gasto Ejem:200" className=" bg-slate-100 p-2" name="cantidad" onChange={handleChange} />
 
       </div>
       <div className=" flex flex-col gap-2">

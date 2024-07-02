@@ -41,8 +41,8 @@ export default function Form() {
                 type="number" 
                 className=" w-full bg-white border bordger-gray-200 p2"
                 placeholder='Definir tu presupuesto '
-                name='presupuesto'
-                value={presupuesto}
+                name='Añade Tu Presupuesto Ejem:500'
+                
                 onChange={ handleChange}
           />
       </div>
