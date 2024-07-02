@@ -1,6 +1,6 @@
 
 import PresupuestoForm from "./components/PresupuestoForm"
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 import { usePresupuesto } from "./hooks/usePresupuesto"
 import PresupuestoTracker from "./components/PresupuestoTracker";
@@ -15,6 +15,13 @@ function App() {
   console.log(state.presupuesto);
   
   const isvalidPresupuesto=useMemo(() =>state.presupuesto>0 , [state.presupuesto])
+
+  //El useeffect se agrega todo aca, para guardarlo en localStorage
+  useEffect(() => {
+    localStorage.setItem('presupuesto',state.presupuesto.toString())
+    //Se tiene que transformar, un array no se puede guardar en storage, solo un STR
+    localStorage.setItem('gastos',JSON.stringify(state.gastos))
+  },[state])
 
   return(
     <>

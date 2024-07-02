@@ -20,11 +20,25 @@ export type PresupuestoState={
     editandoID:Gastos['id']
 }
 
+//Inicia el presupuesto vacio, si no hay nada, retorna en vacio, si hay algo, retorna lo guardado, esto es para el presupuesto
+const initialPresupuesto =() : number => {
+    const localStoragePresupuesto= localStorage.getItem('presupuesto')
+    return localStoragePresupuesto ? +localStoragePresupuesto : 0
+  
+}
+
+//Tomando los gastos guardarlo en Json, para proceder a guardarlo en localStorage
+
+const localStorageGastos = (): Gastos[] => {
+  const localStorageGastos = localStorage.getItem('gastos')
+  return localStorageGastos ? JSON.parse(localStorageGastos): []
+}
+
 export const initialState : PresupuestoState= {
 
-    presupuesto:0,
+    presupuesto:initialPresupuesto(),
     modal:false,
-    gastos:[],
+    gastos:localStorageGastos(),
     editandoID:''
  
 
